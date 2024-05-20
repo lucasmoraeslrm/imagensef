@@ -1,0 +1,81 @@
+﻿@model IEnumerable<Imagens1.Models.Usuario>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="container">
+
+<h1>Listagem de Cliente</h1>
+
+<br>
+<a class="btn btn-primary" asp-action="Create">Novo Registro</a>
+
+<br><br>
+<table class="table table-dark table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Login)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Senha)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Imagem)
+            </th>
+            <th class="text-center">Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Login)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Senha)
+            </td>
+            <td>
+                    @{
+                        try
+                        {
+                            var base64 = Convert.ToBase64String(item.Imagem);
+                            if (!string.IsNullOrEmpty(base64))
+                            {
+                                var imgSrc = string.Format("data:image/png;base64,{0}", base64);
+                                <img class="img-fluid" src="@imgSrc" width="100" />
+                            }
+                        }
+                        catch
+                        {
+                            <img class="img-fluid" src="https://polocaratinga.unifaveni.com/wp-content/uploads/sites/11/2017/02/avatar-vazio-560x560.jpg" width="80" />
+                        }
+
+                    }
+            </td>
+            
+            <td class="text-center">
+                <a class="btn btn-outline-primary btn-sm" asp-action="Edit" asp-route-id="@item.Id"> Editar</a>
+                <a class="btn btn-outline-info btn-sm" asp-action="Details" asp-route-id="@item.Id"> Detalhes</a>
+                <a class="btn btn-outline-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id">Apagar</a>
+            </td>
+
+        </tr>
+}
+    </tbody>
+</table>
+
+</div>

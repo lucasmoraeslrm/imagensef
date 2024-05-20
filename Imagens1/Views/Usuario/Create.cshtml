@@ -1,0 +1,67 @@
+﻿@model Imagens1.Models.Usuario
+@{
+    ViewData["Title"] = "Inserir Usuario";
+}
+
+<div class="container">
+<h1>Inserir Registro</h1>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Nome" class="control-label"></label>
+                <input asp-for="Nome" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Login" class="control-label"></label>
+                <input asp-for="Login" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Senha" class="control-label"></label>
+                <input asp-for="Senha" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Imagem" class="control-label"></label>
+                <input type="file" name="Img" id="Img" class="form-control" />
+                <span asp-validation-for="Imagem" id="Label_img" class="text-danger"></span>
+            </div>
+            <div class="form-group" style="margin-top:15px;">
+                <input type="submit" value="Registrar" class="btn btn-primary btn-sm" />
+                <a class="btn btn-secondary text-white btn-sm" asp-action="Index">Voltar</a>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+
+<script>
+    const Img = document.querySelector('#Img');
+    const labelImg = document.querySelector('#Label_img')
+
+    Img.addEventListener('change', event => {
+        const preview = document.querySelector('#preview_image');
+        if (preview) {
+            preview.remove();
+        }
+
+        const reader = new FileReader;
+        reader.onload = function (event) {
+            const previewImage = document.createElement('Img');
+            previewImage.width = 120;
+            previewImage.height = 100;
+            previewImage.id = 'preview_image';
+            previewImage.src = event.target.result;
+            labelImg.insertAdjacentElement('afterend', previewImage);
+        }
+        reader.readAsDataURL(Img.files[0]);
+
+    })
+</script>
+
+
+
